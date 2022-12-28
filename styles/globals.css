@@ -13,13 +13,23 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 0rem;
+  padding: 1.5rem 1rem 0 1rem;
 }
-nav
+nav {
+  display: flex;
+  justify-content: center;
+}
+nav img {
+  width: 70px;
+  height: 70px;
+  transform: rotate(45deg);
+  background-color: rgb(41, 41, 129);
+}
 main {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
+
 a,p,button {
   font-size: 18px;
 }
@@ -81,26 +91,36 @@ main #content {
   padding: 10rem 5rem;
 }
 
-/* CUSTON CSS */
+/* CUSTOM CSS */
 .sv-row {
-  /* border: 1px solid #b8b8b8; */
   margin-bottom: 2rem;
   padding: 1rem 1rem ;
 }
 .sd-question__content {
   padding: 1.5rem 1rem;
-  /* border-top: 1px solid #f0f0f0; */
 }
-.question_content_custom {
-  /* border: 1px solid lightgray;
-  border-radius: 5px;
-  border-left: 4px solid #a6184e;
-  padding: 10px 0;
-  margin: 10px 0; */
-}
-
 .question-title-answered {
   background-color: rgb(78, 197, 171);
+}
+
+
+.sv-root-modern  .sv-item__svg {
+  /* change item colors (radio checkbox, etc) */
+  border-color: rgb(78, 197, 171) !important;
+}
+  /* Radio */
+.sv-item__decorator {
+  border: solid 1px rgb(21 43 193 / 60%) !important;
+}
+.sd-item--allowhover .sd-radio--allowhover {
+  background-color: aqua;
+}
+
+/* Checkbox */
+.sv-selectbase__label:hover 
+.sv-checkbox__svg {
+  background-color: rgb(78, 197, 171) !important;
+  
 }
 
 /*  */

@@ -17,22 +17,22 @@ export default function Home() {
         
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className='page-header'>
+      <header className=''>
         <div id="top-header" className="" ></div>
       <nav className=''>
         <img className=''></img>
 
         </nav>
       </header>
-      <main>
+      <div className='mt-5'>
         
-        <div className='d-flex flex-row justify-content-center align-items-center'>
+        <div className='d-grid gap-3 mx-auto text-center'>
         <h1>Welcome to Survey builder</h1>
         <h2>Manage your forms</h2>
         <button><a href='/mysurveys'>Let's start</a></button>
       </div>
 
-      </main>
+      </div>
       
     </>
   )

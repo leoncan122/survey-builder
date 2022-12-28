@@ -22,7 +22,7 @@ const MySurveys = ({ data }) => {
               <p>{new Date(survey.createdAt).toLocaleDateString()}</p>
               <p>{survey.name}</p>
               <div><a href={`/${survey.id}`}>Run</a></div>
-              <div>Edit</div>
+              <a href={`/${survey.id}/edit`}>Edit</a>
               <div><button onClick={() => deleteSurvey(survey.id)}>Delete</button></div>
             </div>
           </>
