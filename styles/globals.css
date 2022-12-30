@@ -27,7 +27,7 @@ nav img {
 }
 main {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  /* grid-template-columns: repeat(12, 1fr); */
 }
 
 a,p,button {
@@ -79,7 +79,7 @@ main #content {
 } */
 .survey-card {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
   align-items: center;
   border-radius: 7px;
   background-color: #fffefe;

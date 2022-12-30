@@ -1,6 +1,4 @@
-const fs = require("fs");
-let data = {
-  survey: `import {  Model } from "survey-core";
+import {  Model } from "survey-core";
   import { Survey } from "survey-react-ui";
   import { text } from "../jsons/inputTypes";
   
@@ -36,25 +34,4 @@ let data = {
     return <Survey model={model} css={myCss}/>
   }
   
-  export default SurveyText`,
-};
-export default async function handler(req, res) {
-  console.log(req);
-  fs.writeFile(
-    "pages/movies.js",
-    data.survey,
-    {
-      encoding: "utf8",
-      
-    },
-    (err) => {
-      if (err) console.log(err);
-      else {
-        console.log("File written successfully\n");
-        console.log("The written has the following contents:");
-        res.status(200)
-      }
-    }
-  );
-}
-
+  export default SurveyText
