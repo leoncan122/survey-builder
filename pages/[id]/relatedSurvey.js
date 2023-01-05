@@ -33,3 +33,4 @@ export async function getServerSideProps(ctx) {
     const data = await response.json();
     return { props: { data } };
   }
+  
