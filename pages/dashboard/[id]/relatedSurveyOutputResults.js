@@ -1,14 +1,13 @@
-import React from "react";
+import React from 'react'
 import { Layout } from "../../[id]/Layout";
-
-const SurveyOutputResults = ({ data }) => {
+const relatedSurveyOutputResults = ({data}) => {
   // console.log("results", data);
   const headers = data[0]?.result && Object.keys(data[0]?.result);
-  const surveyTitle = JSON.parse(data[0]?.content).title;
+  
   return (
     <Layout>
       <section className="container table-responsive mt-5">
-        <h1>{surveyTitle}</h1>
+        {/* <h1>{surveyTitle}</h1> */}
         <h2>Results</h2>
 
         <table class="table mt-5">
@@ -38,16 +37,17 @@ const SurveyOutputResults = ({ data }) => {
         </table>
       </section>
     </Layout>
-  );
-};
-
-export default SurveyOutputResults;
-export async function getServerSideProps(ctx) {
-  const { id } = ctx.params;
-  const response = await fetch(
-    `http://localhost:3500/survey/all_result_by_survey_id/${id}`
-  );
-
-  const data = await response.json();
-  return { props: { data } };
+  )
 }
+
+export default relatedSurveyOutputResults;
+export async function getServerSideProps(ctx) {
+    const { id } = ctx.params;
+    const response = await fetch(
+      `http://localhost:3500/survey/related_survey_result/${id}`
+    );
+  
+    const data = await response.json();
+    return { props: { data } };
+  }
+  

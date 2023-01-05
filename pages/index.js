@@ -23,7 +23,7 @@ export default function Home() {
           <img className=""></img>
         </nav>
       </header>
-      <div className="mt-5">
+      <div className="mt-5 h-75">
         <div className="d-grid gap-3 mx-auto text-center">
           <h1>Welcome to Survey builder</h1>
           <h2>Manage your forms</h2>

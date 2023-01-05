@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic';
 import 'survey-core/modern.min.css';
 import { StylesManager } from "survey-core";
 
-const   SurveyText = dynamic(
-  () => import("../../components/SurveyText"),
+
+const  RelatedSurveyPost = dynamic(
+  () => import("../../components/RelatedSurveyPost"),
   {
     ssr: false,
   }
@@ -12,7 +13,6 @@ const   SurveyText = dynamic(
 
 const SurveyRelatedForm = ({data}) => {
   console.log(data)
-  
 
   useEffect(() => {
     StylesManager.applyTheme("modern");
@@ -21,7 +21,7 @@ const SurveyRelatedForm = ({data}) => {
   return (
     <>
     
-    <SurveyText content={data[0].content} />
+    <RelatedSurveyPost data={data} />
     </>
   )
 }

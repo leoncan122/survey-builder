@@ -5,7 +5,8 @@
 }
 body {
   font-size: larger;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 header {
   width: 100%;
@@ -15,14 +16,29 @@ header {
   justify-content: space-between;
   padding: 1.5rem 1rem 0 1rem;
 }
+#top-header {
+  min-height: 50px;
+  max-height: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
 nav {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  border: 1px solid rgba(160, 105, 160, 0.904);
+  background-color: rgba(160, 105, 160, 0.904);
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
 }
 nav img {
   width: 70px;
   height: 70px;
   transform: rotate(45deg);
+  position: relative;
+  top: -400%;
   background-color: rgb(41, 41, 129);
 }
 main {
@@ -30,18 +46,19 @@ main {
   /* grid-template-columns: repeat(12, 1fr); */
 }
 
-a,p,button {
+a,
+p,
+button {
   font-size: 18px;
 }
 button {
   border: none;
   background-color: transparent;
-  cursor: pointer;  
+  cursor: pointer;
 }
- header  {
+header {
   padding: 2rem 1.5rem;
-  border-bottom:5px solid rgb(165, 44, 155);
- }
+}
 
 main #menu {
   grid-column: 1 / 3;
@@ -50,7 +67,7 @@ main #menu {
   list-style: none;
   padding: 1rem 1.5rem;
 }
-#menu ul  {
+#menu ul {
   position: fixed;
   list-style: none;
 }
@@ -94,7 +111,7 @@ main #content {
 /* CUSTOM CSS */
 .sv-row {
   margin-bottom: 2rem;
-  padding: 1rem 1rem ;
+  padding: 1rem 1rem;
 }
 .sd-question__content {
   padding: 1.5rem 1rem;
@@ -103,12 +120,11 @@ main #content {
   background-color: rgb(78, 197, 171);
 }
 
-
-.sv-root-modern  .sv-item__svg {
+.sv-root-modern .sv-item__svg {
   /* change item colors (radio checkbox, etc) */
   border-color: rgb(78, 197, 171) !important;
 }
-  /* Radio */
+/* Radio */
 .sv-item__decorator {
   border: solid 1px rgb(21 43 193 / 60%) !important;
 }
@@ -117,10 +133,8 @@ main #content {
 }
 
 /* Checkbox */
-.sv-selectbase__label:hover 
-.sv-checkbox__svg {
+.sv-selectbase__label:hover .sv-checkbox__svg {
   background-color: rgb(78, 197, 171) !important;
-  
 }
 
 /*  */
