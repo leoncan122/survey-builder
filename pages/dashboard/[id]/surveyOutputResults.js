@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "../../[id]/Layout";
+import { Layout } from "../../../components/Layout";
 
 const SurveyOutputResults = ({ data }) => {
   // console.log("results", data);

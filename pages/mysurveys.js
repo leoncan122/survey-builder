@@ -1,5 +1,4 @@
-import { Layout } from "./[id]/Layout";
-
+import { Layout } from "../components/Layout";
 const MySurveys = ({ data }) => {
   // console.log("dsad", data[2].createdAt);
   const deleteSurvey = async (id) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "../../[id]/Layout";
+import { Layout } from "../../../components/Layout";
 import Link from "next/link";
 
 const Index = ({ data, relatedSurveys }) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from "../../[id]/Layout";
+import { Layout } from "../../../components/Layout";
 const relatedSurveyOutputResults = ({data}) => {
   // console.log("results", data);
   const headers = data[0]?.result && Object.keys(data[0]?.result);
