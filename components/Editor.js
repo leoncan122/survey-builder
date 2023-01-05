@@ -8,9 +8,9 @@ const creatorOptions = {
   isAutoSave: true,
 };
 
-export default function SurveyCreatorWidget() {
+export default function SurveyCreatorWidget({ content, data }) {
   const creator = new SurveyCreator(creatorOptions);
-
+  creator.text = content
   creator.saveSurveyFunc = async (saveNo, callback) => {
     // If you use localStorage:
     window.localStorage.setItem("survey-json", creator.text);
@@ -18,13 +18,13 @@ export default function SurveyCreatorWidget() {
 
     // If you use a web service:
   const body = JSON.stringify({
-      // id: ,
+      id: data[0]?.id,
       content: creator.JSON,
       changedBy: 'Leon cangini',
       changedAt: '2022/12/28'
   })
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
       },

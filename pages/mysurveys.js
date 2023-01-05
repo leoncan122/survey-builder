@@ -34,7 +34,7 @@ const MySurveys = ({ data }) => {
                         Dashboard
                       </a>{" "}
                       <a
-                        href={`/${survey.id}/edit`}
+                        href={`editor/${survey.id}`}
                         class="btn btn-secondary"
                         role="button"
                       >
@@ -56,6 +56,7 @@ export default MySurveys;
 
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`);
+  console.log(res);
   const data = await res.json();
   return { props: { data: data } };
 }

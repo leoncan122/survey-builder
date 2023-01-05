@@ -31,7 +31,7 @@ const Index = ({ data, relatedSurveys }) => {
             <a
               type="button"
               class="btn btn-primary"
-              href={`/${data[0].id}/edit`}
+              href={`editor/${data[0].id}`}
             >
               Edit survey
             </a>
@@ -48,7 +48,7 @@ const Index = ({ data, relatedSurveys }) => {
                   <h6 class="card-subtitle mb-2 text-muted">{survey.createdat.split("T")[0]}</h6>
                   <p class="card-text">This survey has a 1 to many relation with each of the main's output survey</p>
                   <a
-                    href={`/${survey.id}/editRelatedSurvey`}
+                    href={`/editor/${survey.id}/related-survey`}
                     class="btn btn-secondary mt-auto align-self-start"
                     role="button"
                   >
