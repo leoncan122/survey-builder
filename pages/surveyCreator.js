@@ -1,8 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
-//import CreatorComponent from '../components/creator'
 
-const CreatorComponent = dynamic(() => import("../components/creator"), {
+const CreatorComponent = dynamic(() => import("../components/Creator"), {
   ssr: false,
 });
 
