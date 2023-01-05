@@ -28,7 +28,7 @@ const SurveyForm = ({data}) => {
 export default SurveyForm;
 export async function getServerSideProps(ctx) {
     const {id} = ctx.params
-    const response = await fetch(`http://localhost:3500/survey/${id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/${id}`);
     
     const data = await response.json();
     return { props: { data } };

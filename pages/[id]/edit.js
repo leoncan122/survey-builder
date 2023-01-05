@@ -22,7 +22,7 @@ export default EditSurvey;
 
 export async function getServerSideProps(ctx) {
   const { id } = ctx.params;
-  const res = await fetch(`http://localhost:3500/survey/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/${id}`);
   const data = await res.json();
 
   return { props: { data: data } };

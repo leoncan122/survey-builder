@@ -44,7 +44,7 @@ export default relatedSurveyOutputResults;
 export async function getServerSideProps(ctx) {
     const { id } = ctx.params;
     const response = await fetch(
-      `http://localhost:3500/survey/related_survey_result/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/related_survey_result/${id}`
     );
   
     const data = await response.json();

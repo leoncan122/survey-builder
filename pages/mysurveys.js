@@ -4,7 +4,7 @@ const MySurveys = ({ data }) => {
   // console.log("dsad", data[2].createdAt);
   const deleteSurvey = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3500/survey/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -56,7 +56,7 @@ const MySurveys = ({ data }) => {
 export default MySurveys;
 
 export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3500/survey`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`);
   const data = await res.json();
   return { props: { data: data } };
 }

@@ -22,7 +22,7 @@ let data = {
         createdAt: "2022/10/22",
         createdBy: "Leon Cangini"
       })
-      const res =await fetch('http://localhost:3500/survey/survey_result', {
+      const res =await fetch('${process.env.NEXT_PUBLIC_SERVER_URL}/survey/survey_result', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json; charset=utf-8"

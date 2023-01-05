@@ -132,10 +132,10 @@ export default Index;
 export const getServerSideProps = async (ctx) => {
   const { id } = ctx.params;
   const [data, relatedSurveys] = await Promise.all([
-    fetch(`http://localhost:3500/survey/all_result_by_survey_id/${id}`).then(
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_id/${id}`).then(
       (r) => r.json()
     ),
-    fetch(`http://localhost:3500/survey/all_related/${id}`).then((r) =>
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_related/${id}`).then((r) =>
       r.json()
     ),
   ]);

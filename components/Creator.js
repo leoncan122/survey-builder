@@ -23,7 +23,7 @@ export default function SurveyCreatorWidget({ content, data }) {
       changedBy: 'Leon cangini',
       changedAt: '2022/12/28'
   })
-  const res = await fetch('http://localhost:3500/survey', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`, {
       method: 'PUT',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
