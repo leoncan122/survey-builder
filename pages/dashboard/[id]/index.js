@@ -9,7 +9,7 @@ const Index = ({ data, relatedSurveys }) => {
   return (
     <Layout>
       <section class="container mt-5">
-        <h1>{JSON.parse(data[0].content).title}</h1>
+        <h1>{JSON.parse(data[0]?.content).title}</h1>
         <h2>Dashboard</h2>
         <h2 class="mt-5">What do you want to do today?</h2>
         <div class="d-flex gap-3" role="group" aria-label="dashboard-buttons">
@@ -63,7 +63,7 @@ const Index = ({ data, relatedSurveys }) => {
                 <h6 class="card-subtitle mb-2 text-muted">Today's date</h6>
                 <p class="card-text">This survey has a 1 to many relation with each of the main's output survey</p>
 
-                <a href={`/#`} class="btn btn-secondary mt-auto align-self-start" role="button">
+                <a href={`/creator/${data[0].id}/related-survey`} class="btn btn-secondary mt-auto align-self-start" role="button">
                   Add
                 </a>
               </div>

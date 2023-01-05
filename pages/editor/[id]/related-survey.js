@@ -5,7 +5,7 @@ import "survey-core/defaultV2.css";
 import "survey-creator-core/survey-creator-core.css";
 import dynamic from "next/dynamic";
 
-const EditorComponent = dynamic(() => import("../../../components/Editor"), {
+const EditorComponent = dynamic(() => import("../../../components/EditorRelated"), {
   ssr: false,
 });
 const creatorOptions = {
