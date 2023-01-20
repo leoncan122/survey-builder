@@ -5,7 +5,7 @@ import "survey-creator-core/survey-creator-core.min.css";
 
 const creatorOptions = {
   showLogicTab: true,
-  isAutoSave: true,
+  isAutoSave: false,
 };
 
 export default function SurveyCreatorWidget({ content, data }) {

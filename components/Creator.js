@@ -5,7 +5,7 @@ import "survey-creator-core/survey-creator-core.min.css";
 
 const creatorOptions = {
   showLogicTab: true,
-  isAutoSave: true,
+  isAutoSave: false,
 };
 
 export default function SurveyCreatorWidget() {
@@ -18,18 +18,24 @@ export default function SurveyCreatorWidget() {
 
     // If you use a web service:
   const body = JSON.stringify({
-      // id: ,
       content: creator.JSON,
-      changedBy: 'Leon cangini',
-      changedAt: '2022/12/28'
+      createdBy: 'Leon cangini',
+      createdAt: '2022/12/28'
   })
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`, {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
       },
       body: body
   })
+    const data = await res.json()
+    callback(saveNo, true);
+  }catch (error) {
+    alert(error.message)
+  }
+  
 
   };
 

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Header = () => {
   const router = useRouter()
-  console.log(router)
+  // console.log(router)
   return (
     
     <header className="">

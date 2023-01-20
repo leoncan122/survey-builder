@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 const creatorOptions = {
   showLogicTab: true,
-  isAutoSave: true,
+  isAutoSave: false,
 };
 
 export default function SurveyCreatorWidget() {
@@ -20,18 +20,20 @@ export default function SurveyCreatorWidget() {
 
     // If you use a web service:
   const body = JSON.stringify({
-      survey_id: router.query.id,
+      survey_id: Number(router.query.id),
       content: creator.JSON,
-      changedBy: 'Leon cangini',
-      changedAt: '2022/12/28'
+      createdBy: 'Leon cangini',
+      createdAt: '2022/12/28'
   })
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/related`, {
+  const res = await fetch(`http://localhost:3500/survey/related`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
       },
       body: body
   })
+  const data = await res.json()
+  console.log(data);
 
   };
 
