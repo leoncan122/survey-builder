@@ -2,7 +2,7 @@ import {  Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import { text } from "../jsons/inputTypes";
 
-const SurveyText = ({content}) => {
+const SurveyText = ({data}) => {
   let myCss = {
     row: "sv-row",
     question: {
@@ -11,11 +11,11 @@ const SurveyText = ({content}) => {
     },
     
 };
-
-  const model = new Model(content);
+const id = data?.id
+  const model = new Model(data[0].content);
   model.onComplete.add( async function (sender, options) {
     const body = JSON.stringify({
-      surveyId: 1,
+      surveyId: id,
       content: sender.data,
       createdAt: "2022/10/22",
       createdBy: "Leon Cangini"

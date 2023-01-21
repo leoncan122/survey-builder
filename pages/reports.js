@@ -14,17 +14,16 @@ const Reports = ({ surveys }) => {
     
   ]);
   const [showModalFilter, setShowModalFilter]  = useState(false);
-  console.log(results)
   useEffect(() => {
-    const resultados = [];
+    let resultados = [];
     const filterResults = (arr) => {
       if (arr.length < 1) return;
 
-      const [first, ...rest] = arr;
+      const [firstFilter, ...rest] = arr;
 
-      const newData = results.filter((r) => first.execute(r));
+      const newData = results.filter((r) => firstFilter.fn(r, firstFilter.resultKey, firstFilter.expression));
 
-      newData && resultados.push(newData[0]);
+      resultados = newData
 
       return filterResults([...rest]);
     };
@@ -80,12 +79,13 @@ const Reports = ({ surveys }) => {
   };
   const getResults = async (id) => {
     const data = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_id/${id}`
+      `http://localhost:3500/survey/all_result_by_survey_schema_id/${id}`
     );
     const result = await data.json();
-    addResults(result[0].result);
+    console.log("fetch result", result)
+    addResults(result);
   };
-  const addResults = (result) => setResults((prev) => [...prev, result]);
+  const addResults = (result) => setResults((prev) => [...prev, ...result]);
 
   const deleteResults = (id) => {
     const newResults = results.filter((result) => result.survey_id !== id);
@@ -94,7 +94,7 @@ const Reports = ({ surveys }) => {
   
   // const seeValueOptions = (element) => {};
   
-  console.log("filters", filters);
+  console.log("results", results);
   return (
       <Layout>
       {showModalFilter && <AddFilter setShowModalFilter={setShowModalFilter} setFilters={setFilters} selected={selected}/>}
@@ -176,6 +176,7 @@ const Reports = ({ surveys }) => {
                     </div>
                   </div>
                 )}
+                
               </>
             );
           })}
@@ -185,35 +186,52 @@ const Reports = ({ surveys }) => {
         <h3 className="mt-5 mb-3">
           2. Select fields forms have in common and you want to filter for
         </h3>
-        <p>Double click to select the field.</p>
+        <p>Click to select the field.</p>
         <div className="row mt-5">
           <div className="list-group col-sm-6 col-md-4">
-            {selectedForms.length > 0 &&
+          <button
+                  type="button"
+                  className={`list-group-item list-group-item-action active bg-gradient`}
+                >Filter by</button>
+            {selectedForms.length > 0 ? (
               compareArrays(surveys).map((element, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`list-group-item list-group-item-action ${
+                  className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${
                     selectedNames.includes(element.valueName) &&
-                    "active bg-gradient"
+                    "bg-info bg-gradient"
                   }`}
                   onClick={(e) => setSelected(element)}
                 >
-                  {element.valueName} is Type {element.type}{" "}
+                  {element.valueName} 
+                  <button type="button"
+                  className="bg-dark text-white btn"
+                    onClick={() => {
+                    setSelected(element)
+                    setShowModalFilter(!showModalFilter)
+                  }}
+                  >Add filter</button>
                 </button>
-              ))}
+              ))) : (
+                <div className="list-group-item">No surveys selected yet</div>
+              )}
           </div>
           {selected && (
             <div className="col-sm-6 col-md-4">
               <div className="list-group">
                 <div className="list-group-item list-group-item-action active">
                   {selected?.name}
+                  
                 </div>
                 <div className="list-group-item list-group-item-action ">
                   Title: {`"${selected?.title}"`}
                 </div>
                 <div className="list-group-item list-group-item-action ">
                   Value name: {`"${selected?.valueName}"`}
+                </div>
+                <div className="list-group-item list-group-item-action ">
+                  Type: {selected.type}{" "}
                 </div>
                 {selected.choices && (
                   <div className="list-group-item list-group-item-action ">
@@ -236,6 +254,21 @@ const Reports = ({ surveys }) => {
               </div>
             </div>
           )}
+
+        <div className="list-group col-sm-6 col-md-4">
+          <div
+                  type="button"
+                  className={`list-group-item list-group-item-action bg-dark text-white bg-gradient`}
+                >Filters</div>
+            {filters.length > 0 ? (
+              filters.map(filter => (
+                <div className="list-group-item">{`${filter.resultKey} ${filter.symbol} ${filter.expression}`}</div>
+              ))
+            ) : (
+              <div className="list-group-item">No filters added yet</div>
+            )}
+              
+          </div>
         </div>
       </section>
       <section className="container mt-5">
@@ -257,59 +290,7 @@ const Reports = ({ surveys }) => {
         </button>
         <div className="row gap-3"></div>
       </section>
-      {/* <section className="container table-responsive mt-5">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">By</th>
-              {relatedSurveys?.map((survey) => (
-                <th scope="col" className="text-center">
-                  {JSON.parse(survey.content).title}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.map((element, index) => (
-                <>
-                  <tr>
-                    <td scope="row">{element.createdat.split("T")[0]}</td>
-                    <td>{element.createdby}</td>
-                    {relatedSurveys?.map((survey) => (
-                      <td
-                        scope="col"
-                        className="d-flex justify-content-center gap-3"
-                      >
-                        <Link
-                          legacyBehavior
-                          href={{
-                            pathname: `/${survey.id}/relatedSurvey`,
-                            query: {
-                              relatedPrimaryResultId: element.surveyresultid,
-                            },
-                          }}
-                        >
-                          <a className="btn btn-primary " role="button">
-                            Run
-                          </a>
-                        </Link>
-                        <a
-                          href={`/dashboard/${element.surveyresultid}/relatedSurveyOutputResults`}
-                          className="btn btn-primary"
-                          role="button"
-                        >
-                          Results
-                        </a>{" "}
-                      </td>
-                    ))}
-                  </tr>
-                </>
-              ))}
-          </tbody>
-        </table>
-      </section> */}
+      
     </Layout>
     
   );

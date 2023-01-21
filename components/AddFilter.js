@@ -8,20 +8,27 @@ console.log("operator",operator);
   const operatorFunctions = {
     greater: {
       symbol: 'More than',
-      fn: (expression) => (result) => result > expression
+      expression: expression,
+      resultKey: selected.valueName,
+      fn: (result, key, expression) => result[key] > expression
       },
     smaller: {
       symbol: 'Less than',
-      fn: (expression) => (result) => result < expression
-      
+      expression: expression,
+      resultKey: selected.valueName,
+      fn: (result, key, expression) =>  result[key] < expression
     },
     equal: {
       symbol: 'Equal to',
-      fn: (expression) => (result) => result == expression
+      expression: expression,
+      resultKey: selected.valueName,
+      fn: (result, key, expression) => result[key] == expression
     },
     notEqual: {
       symbol: 'Not equal to',
-      fn: (expression) => (result) => result != expression
+      expression: expression,
+      resultKey: selected.valueName,
+      fn: (result, key, expression) => result[key] != expression
     },
     // and: {
     //   symbol: 'and',
@@ -31,7 +38,7 @@ console.log("operator",operator);
     //   fn:  (expressionA, expressionB) => (expressionA) expressionA || expressionB},
   }
   const addFilter = () => {
-    Object.values(operatorFunctions).forEach(op => op.symbol === operator && setFilters(prev => ([...prev, op.fn(expression, selected.valueName)])))
+    Object.values(operatorFunctions).forEach(op => op.symbol === operator && setFilters(prev => ([...prev, op])));
     // setResult(result.split(' ')[0])
   }
   return (
