@@ -79,7 +79,7 @@ const Reports = ({ surveys }) => {
   };
   const getResults = async (id) => {
     const data = await fetch(
-      `http://localhost:3500/survey/all_result_by_survey_schema_id/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_schema_id/${id}`
     );
     const result = await data.json();
     console.log("fetch result", result)
@@ -111,12 +111,12 @@ const Reports = ({ surveys }) => {
             return (
               <>
                 <div
-                  className={`col-sm-6 col-md-3 card ${
-                    selectedForms.includes(survey.id) && `bg-info`
-                  }`}
+                  className={`col-sm-6 col-md-3 card `}
                 >
                   <div
-                    className="card-body d-flex flex-column"
+                    className={`${
+                      selectedForms.includes(survey.id) && `bg-info`
+                    } card-body d-flex flex-column`}
                     // onClick={(e) => handleSelection(survey.id)}
                   >
                     <h5 className="card-title">{json.title}</h5>
@@ -134,11 +134,10 @@ const Reports = ({ surveys }) => {
                       Select
                     </button>
                   </div>
-                </div>
-                <div className="col-sm-6 col-md-4">
                   <div className="list-group">
                     <button className="list-group-item list-group-item-action active">
-                      {json.title}
+                      {/* {json.title} */}
+                      Datapoints
                     </button>
                     {fields.map((field, index) => (
                       <button
@@ -151,6 +150,7 @@ const Reports = ({ surveys }) => {
                     ))}
                   </div>
                 </div>
+                
                 {selected && (
                   <div className="col-sm-6 col-md-4">
                     <div className="list-group">

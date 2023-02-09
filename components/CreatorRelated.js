@@ -25,7 +25,7 @@ export default function SurveyCreatorWidget() {
       createdBy: 'Leon cangini',
       createdAt: '2022/12/28'
   })
-  const res = await fetch(`http://localhost:3500/survey/related`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/related`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
