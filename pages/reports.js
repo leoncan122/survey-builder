@@ -51,18 +51,75 @@ const Reports = ({ surveys }) => {
     }
   };
 
-  const compareArrays = (arrayOfArrays) => {
-    const matchs = surveys
+  const compareArrays = (surveys) => {
+    let matchs = []
+    const selectedFormObjects = surveys
       .filter((survey) => selectedForms.includes(survey.id))
       .map((survey) =>
         JSON.parse(survey?.content).pages.map((page) => page.elements)
       );
-    const flat = matchs.flat();
+    const flat = selectedFormObjects.flat();
 
-    const toFindDuplicates = (arry) =>
-      arry.filter((item, index, arr) => arr.indexOf(item) !== index);
-    const result = toFindDuplicates([...flat[0], ...flat[0]]);
-    return result;
+    // matchs = selectedFormObjects. 
+
+    console.log("matchs", matchs)
+    console.log("flatted matchs", flat)
+
+    const x = []
+    // const findsss = (arrays) => {
+    //   const resultsDuplicateds = []
+    //   return arrays.map((array, index) => {
+    //     let values = array.map(objetos => objetos.valueName)
+    //     return arrays.map((otherArrays, i) => {
+    //       if (index === i ) return;
+    //       const x = otherArrays.map(otherObjetos => {
+    //         console.log("log: ",otherObjetos.valueName, values.includes(otherObjetos.valueName));
+    //         values.includes(otherObjetos.valueName) && resultsDuplicateds.push(otherObjetos)
+    //         console.log("verga",resultsDuplicateds);
+
+    //       } )
+    //     })
+    //   })
+      
+    // }
+    function findDuplicateKeys(array) {
+      let keys = [];
+      let duplicateKeys = [];
+    
+      array.forEach(function(obj) {
+        for (let key in obj) {
+          if (keys.includes(key)) {
+            if (!duplicateKeys.includes(key)) {
+              duplicateKeys.push(key);
+            }
+          } else {
+            keys.push(key);
+          }
+        }
+      });
+    
+      return duplicateKeys;
+    }
+    function getDuplicates(arrayOfArrays) {
+      let duplicates = [];
+      let valueMap = new Map();
+      arrayOfArrays.reduce((acc, curr) => acc.concat(curr), [])
+        .forEach(obj => {
+          let value = obj.valueName;
+          if (!valueMap.has(value)) {
+            valueMap.set(value, []);
+          }
+          valueMap.get(value).push(obj);
+        });
+      for (let [key, value] of valueMap) {
+        if (value.length > 1) {
+          duplicates = duplicates.concat(value.slice(0, 1));
+        }
+      }
+      return duplicates;
+    }
+    // const duplicatedResults = toFindDuplicates([...flat[0], ...flat[0]]);
+    return getDuplicates(flat);
   };
 
   const selectForm = async (id) => {
@@ -79,7 +136,7 @@ const Reports = ({ surveys }) => {
   };
   const getResults = async (id) => {
     const data = await fetch(
-      `http://localhost:3500/survey/all_result_by_survey_schema_id/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_schema_id/${id}`
     );
     const result = await data.json();
     console.log("fetch result", result)

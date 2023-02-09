@@ -23,7 +23,7 @@ export default function SurveyCreatorWidget() {
       createdAt: '2022/12/28'
   })
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey`, {
+    const res = await fetch(`http://localhost:3500/survey`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json;charset=UTF-8'
@@ -31,7 +31,7 @@ export default function SurveyCreatorWidget() {
       body: body
   })
     const data = await res.json()
-    callback(saveNo, true);
+    // callback(saveNo, true);
   }catch (error) {
     alert(error.message)
   }
