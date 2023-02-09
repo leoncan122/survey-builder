@@ -9,9 +9,10 @@ const Header = () => {
     <header className="">
     <div id="top-header" className="w-100">
       <ul className='nav '>
-        <li className='nav-item'><a className='nav-link' href="">Home</a></li>
-        <li className='nav-item'><a className='nav-link' href="mysurveys">My surveys</a></li>
+        <li className='nav-item'><a className='nav-link' href="/">Home</a></li>
+        <li className='nav-item'><a className='nav-link' href="/mysurveys">My surveys</a></li>
         <li className='nav-item'><a className='nav-link' href="/creator">Create survey</a></li>
+        <li className='nav-item'><a className='nav-link' href="/reports">Data and Reports</a></li>
 
       </ul>
     </div>
