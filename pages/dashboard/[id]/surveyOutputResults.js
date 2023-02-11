@@ -11,7 +11,7 @@ const SurveyOutputResults = ({ data }) => {
         <h1>{surveyTitle}</h1>
         <h2>Results</h2>
 
-        <table class="table mt-5">
+        <table className="table mt-5">
           <thead>
             <tr>
               <th scope="col">Date</th>

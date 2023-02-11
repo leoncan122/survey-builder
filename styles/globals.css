@@ -172,3 +172,20 @@ main #content {
   padding: 3%;
   width: 50%;
 }
+
+
+.btn-filter-panel {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background-color: rgb(27, 26, 26);
+  color: white;
+  border: none;
+  border-radius: 12px;
+
+}
+
+.btn-filter-panel > span {
+  font-size: 12px; 
+}

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import useNamesSelected from "../hooks/useNamesSelected";
 import AddFilter from "../components/addFilter";
+import "../styles/FilterPanel.module.css";
 
 const Reports = ({ surveys }) => {
   // console.log(surveys);
@@ -33,63 +34,66 @@ const Reports = ({ surveys }) => {
     setFilteredResults(resultados);
   }, [filters]);
 
-  const typeOfQuestion = (field) => {
-    if (!field.type) return;
-    switch (field.type) {
-      case "radiogroup":
-        return field.choices.map((choice) => {
-          if (typeof choice === "object") return choice.value;
-          return choice;
-        });
-        break;
-      case "checkbox":
-        return field.choices.map((choice) => {
-          if (typeof choice === "object") return choice.value;
-          return choice;
-        });
-        break;
-    }
-  };
 
-  const compareArrays = (surveys) => {
-    let matchs = [];
-    const selectedFormObjects = surveys
-      .filter((survey) => selectedForms.includes(survey.id))
-      .map((survey) =>
-        JSON.parse(survey?.content).pages.map((page) => page.elements)
-      );
-    const flat = selectedFormObjects.flat();
-
-    // matchs = selectedFormObjects.
-
-    console.log("matchs", matchs);
-    console.log("flatted matchs", flat);
-
-    const x = [];
-
-    function getDuplicates(arrayOfArrays) {
-      let duplicates = [];
-      let valueMap = new Map();
-      arrayOfArrays
-        .reduce((acc, curr) => acc.concat(curr), [])
-        .forEach((obj) => {
-          let value = obj.valueName;
-          if (!valueMap.has(value)) {
-            valueMap.set(value, []);
+  const compareArrays = useCallback(
+    (surveys) => {
+      let matchs = [];
+      const selectedFormObjects = surveys
+        .filter((survey) => selectedForms.includes(survey.id))
+        .map((survey) =>
+          JSON.parse(survey?.content).pages.map((page) => page.elements)
+        );
+      const flat = selectedFormObjects.flat();
+  
+      // matchs = selectedFormObjects.
+  
+      console.log("matchs", matchs);
+      console.log("flatted matchs", flat);
+  
+      const x = [];
+  
+      function getDuplicates(arrayOfArrays) {
+        let duplicates = [];
+        let valueMap = new Map();
+        arrayOfArrays
+          .reduce((acc, curr) => acc.concat(curr), [])
+          .forEach((obj) => {
+            let value = obj.valueName;
+            if (!valueMap.has(value)) {
+              valueMap.set(value, []);
+            }
+            valueMap.get(value).push(obj);
+          });
+        for (let [key, value] of valueMap) {
+          if (value.length > 1) {
+            duplicates = duplicates.concat(value.slice(0, 1));
           }
-          valueMap.get(value).push(obj);
-        });
-      for (let [key, value] of valueMap) {
-        if (value.length > 1) {
-          duplicates = duplicates.concat(value.slice(0, 1));
         }
+        return duplicates;
       }
-      return duplicates;
+      console.log("flat result", flat);
+      return selectedForms.length < 2 ? flat[0] : getDuplicates(flat);
     }
-    console.log("flat result", flat)
-    return surveys.length < 2 ? flat[0] : getDuplicates(flat);
-  };
-
+  )
+  const typeOfQuestion = useCallback(
+    (field) => {
+      if (!field.type) return;
+      switch (field.type) {
+        case "radiogroup":
+          return field.choices.map((choice) => {
+            if (typeof choice === "object") return choice.value;
+            return choice;
+          });
+          break;
+        case "checkbox":
+          return field.choices.map((choice) => {
+            if (typeof choice === "object") return choice.value;
+            return choice;
+          });
+          break;
+      }
+    }
+  )
   const selectForm = async (id) => {
     const isValueSelected = selectedForms.includes(id);
     const newValues = selectedForms.filter((id) => !id);
@@ -118,13 +122,14 @@ const Reports = ({ surveys }) => {
     setResults(newResults);
   };
 
-
-  // console.log("results", results);
+  const deleteFilter = (filter) => setFilters([...filters.filter(fltr => fltr.expression !== filter.expression || fltr.resultKey !== filter.resultKey)])
+  console.log("filters", filters);
 
   return (
     <Layout>
       {showModalFilter && (
         <AddFilter
+          showModalFilter={showModalFilter}
           setShowModalFilter={setShowModalFilter}
           setFilters={setFilters}
           selected={selected}
@@ -142,19 +147,17 @@ const Reports = ({ surveys }) => {
           return (
             <>
               <div
-                className={`row shadow mb-5 py-5 ${
+                className={`row shadow mb-5 py-5  ${
                   selectedForms.includes(survey.id) && `bg-info`
                 }`}
               >
-                <div className={`col-sm-6 col-md-4`}>
+                <div className={`card shadow py-3 col-sm-6 col-md-4 `}>
                   <div
-                    className={`${
-                      selectedForms.includes(survey.id) && `bg-info`
-                    } card-body d-flex flex-column`}
+                    className={`card-body d-flex flex-column`}
                     // onClick={(e) => handleSelection(survey.id)}
                   >
-                    <h5 className="card-title">{json.title}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
+                    <h5 className="card-title fw-bolder">{json.title}</h5>
+                    <h6 className="card-subtitle mb-2 text-muted ">
                       {survey.createdat.split("T")[0]}
                     </h6>
 
@@ -166,7 +169,7 @@ const Reports = ({ surveys }) => {
                     </button>
                   </div>
                   <div className="list-group">
-                    <button className="list-group-item list-group-item-action active">
+                    <button className="list-group-item list-group-item-action active fw-bolder  ">
                       {/* {json.title} */}
                       Datapoints
                     </button>
@@ -174,50 +177,59 @@ const Reports = ({ surveys }) => {
                       <button
                         key={index}
                         onClick={() => setSelected(field)}
-                        className="list-group-item list-group-item-action"
+                        className="list-group-item list-group-item-action d-flex justify-content-between min-h-mas align-items-center"
                       >
-                        {field.valueName}
+                        <p>{field.valueName}</p>
+                        <p className="small">
+                          <strong>+</strong>
+                        </p>
                       </button>
                     ))}
                   </div>
                 </div>
-                {selected && (
-                  <div className="col-sm-6 col-md-8 list-group">
-                    <div className="list-group-item list-group-item-action ">
-                      <strong>name: </strong> "{selected?.name}"
-                    </div>
-                    <div className="list-group-item list-group-item-action ">
-                      <strong>Title: </strong> {`"${selected?.title}"`}
-                    </div>
-                    <div className="list-group-item list-group-item-action ">
-                      <strong>Value name: </strong>
-                      {`"${selected?.valueName}"`}
-                    </div>
+                <div className="col-sm-6 col-md-8 list-group card ">
+                  {selected && (
+                    <>
+                      <div className="list-group-item list-group-item-action ">
+                        <strong>name: </strong> "{selected?.name}"
+                      </div>
+                      <div className="list-group-item list-group-item-action ">
+                        <strong>Title: </strong> {`"${selected?.title}"`}
+                      </div>
+                      <div className="list-group-item list-group-item-action ">
+                        <strong>Value name: </strong>
+                        {`"${selected?.valueName}"`}
+                      </div>
 
-                    <div className="list-group-item list-group-item-action ">
-                      <strong>Choices: </strong>{" "}
-                      {selected.choices && (
-                        <div className="d-flex mt-2 ">
-                          {Array.from({ length: 2 }, (_, i) => {
-                            const columnLength = Math.ceil(selected.choices.length / 2);
-                            return (
-                              <div key={i} style={{ flex: 1 }}>
-                                {typeOfQuestion(selected)
-                                  .slice(i * columnLength, (i + 1) * columnLength)
-                                  .map((option) => (
-                                    <>
-                                      <p>{option}</p>
-                                    </>
-                                  ))}
-                              </div>
-                            )
-
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                      <div className="list-group-item list-group-item-action ">
+                        <strong>Choices: </strong>{" "}
+                        {selected.choices && (
+                          <div className="d-flex mt-2 ">
+                            {Array.from({ length: 2 }, (_, i) => {
+                              const columnLength = Math.ceil(
+                                selected.choices.length / 2
+                              );
+                              return (
+                                <div key={i} style={{ flex: 1 }}>
+                                  {typeOfQuestion(selected)
+                                    .slice(
+                                      i * columnLength,
+                                      (i + 1) * columnLength
+                                    )
+                                    .map((option) => (
+                                      <>
+                                        <p className="small">{option}</p>
+                                      </>
+                                    ))}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </>
           );
@@ -236,13 +248,18 @@ const Reports = ({ surveys }) => {
             >
               Filters
             </div>
-            {filters.length > 0 ? (
-              filters.map((filter) => (
-                <div className="list-group-item">{`${filter.resultKey} ${filter.symbol} ${filter.expression}`}</div>
-              ))
-            ) : (
-              <div className="list-group-item">No filters added yet</div>
-            )}
+            <div className="d-flex gap-2 py-2 px-1">
+              {filters.length > 0 ? (
+                filters.map((filter) => (
+                  <p type="button" className="btn-filter-panel"  name="" onClick={() => deleteFilter(filter)}>
+                    <span>{filter.resultKey}  <ins>{filter.symbol}</ins>  {filter.expression}</span>
+                    <small>X</small>
+                  </p>
+                ))
+              ) : (
+                <div className="list-group-item">No filters added yet</div>
+              )}
+            </div>
           </div>
           <div className="row mt-2">
             <button type="button" className={`list-group fw-bolder`}>
@@ -272,15 +289,7 @@ const Reports = ({ surveys }) => {
                       Add filter
                     </button>
                   </button>
-                  <div className="list-group ">
-                    {filters.length > 0 && (
-                      filters
-                        .filter((fltr) => fltr.resultKey === element.valueName)
-                        .map((filter) => (
-                          <div className="list-group-item">{`${filter.resultKey} ${filter.symbol} ${filter.expression}`}</div>
-                        ))
-                    ) }
-                  </div>{" "}
+                  
                 </>
               ))
             ) : (

@@ -18,24 +18,24 @@ const MySurveys = ({ data }) => {
         <h1>My surveys</h1>
         {data?.map((survey) => (
           <>
-            <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
+            <div className="row">
+              <div className="col-sm-6 col-md-4">
+                <div className="thumbnail">
                   <img src="images.jfif" alt="survey-img" />
-                  <div class="caption">
+                  <div className="caption">
                     <h3>{JSON.parse(survey.content).title}</h3>
                     <p>{survey.createdat.split('T')[0]}</p>
                     <p>
                       <a
                         href={`dashboard/${survey.id}`}
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                         role="button"
                       >
                         Dashboard
                       </a>{" "}
                       <a
                         href={`editor/${survey.id}`}
-                        class="btn btn-secondary"
+                        className="btn btn-secondary"
                         role="button"
                       >
                         Edit

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const AddFilter = ({ setShowModalFilter, setFilters, selected }) => {
   const [expression, setExpression] = useState('')
   const [operator, setOperator] = useState('')
-console.log("operator",operator);
 
   const operatorFunctions = {
     greater: {
@@ -37,9 +36,11 @@ console.log("operator",operator);
     //   symbol: 'or',
     //   fn:  (expressionA, expressionB) => (expressionA) expressionA || expressionB},
   }
+  const closeModal = () => setShowModalFilter(false)
+
   const addFilter = () => {
     Object.values(operatorFunctions).forEach(op => op.symbol === operator && setFilters(prev => ([...prev, op])));
-    // setResult(result.split(' ')[0])
+    closeModal()
   }
   return (
    <>
@@ -53,7 +54,7 @@ console.log("operator",operator);
             {/* <label  className="col-form-label">2. Add Expression</label> */}
           
           <div className="mb-3 d-flex gap-2">
-            <p>{selected?.valueName}</p>
+            <span>{selected?.valueName}</span>
             <select class="form-select" 
             onChange={(e) => setOperator(e.target.value)}
             aria-label="select">
@@ -73,7 +74,7 @@ console.log("operator",operator);
         </form>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" onClick={(e) => setShowModalFilter(false)}>Close</button>
+        <button type="button" className="btn btn-secondary" onClick={(e) => closeModal()}>Close</button>
         <button type="button" className="btn btn-primary" onClick={() => addFilter()}>Add filter</button>
       </div>
     </div>
