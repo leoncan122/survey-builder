@@ -7,8 +7,8 @@ const fs = require('fs');
 const { spawnSync } = require('child_process');
 
 const scope = 'leoncan122';
-const authToken = process.env.GITHUB_TOKEN;
-
+const authToken = process.env.NPM_TOKEN;
+console.log(authToken)
 // Only run this script on Netlify, this is a default Netlify environment variable
 if (process.env.NETLIFY === 'true') {
   // Check if this has already run (we spawn yarn again at the end)
