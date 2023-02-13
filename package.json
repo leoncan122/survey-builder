@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
