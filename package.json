@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "node ./netlify-preinstall.js",
     "dev": "next dev",
-    "build": "npm run pres¡install && next build",
+    "build": "npm run presinstall && next build",
     "start": "next start",
     "lint": "next lint"
   },
