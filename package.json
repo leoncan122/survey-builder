@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "preinstall": "node netlify.preinstall.js",
-    "dev": "next dev",
-    "build": "npm run preinstall && next build",
+    "dev": "npm run preinstall && next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@leoncan122/react-form-lib": "^0.3.6",
+    "@leoncan122/react-form-lib": "git://github.com/leoncan122/react-form-lib.git#813e858",
     "@next/font": "13.0.7",
     "bootstrap": "^5.2.3",
     "next": "13.0.7",
