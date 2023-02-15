@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import useNamesSelected from "../hooks/useNamesSelected";
-import AddFilter from "../components/addFilter";
+import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
 
 const Reports = ({ surveys }) => {
