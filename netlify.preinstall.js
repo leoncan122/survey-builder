@@ -13,7 +13,6 @@ fs.writeFileSync(
   `//npm.pkg.github.com/:_authToken=${process.env.NPM_TOKEN}\n//npm.pkg.github.com/:_header:Authorization=token ${process.env.NPM_TOKEN}\n@${scope}:registry=https://npm.pkg.github.com\n`,
 );
 
-console.log(process.env.NPM_TOKEN)
 // Only run this script on Netlify, this is a default Netlify environment variable
 if (process.env.NETLIFY === 'true') {
   // Check if this has already run (we spawn yarn again at the end)

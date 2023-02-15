@@ -33,7 +33,7 @@ const Reports = ({ surveys }) => {
     filterResults(filters);
     setFilteredResults(resultados);
   }, [filters]);
-
+console.log("filtered results", filteredResults)
 
   const compareArrays = useCallback(
     (surveys) => {
@@ -45,12 +45,8 @@ const Reports = ({ surveys }) => {
         );
       const flat = selectedFormObjects.flat();
   
-      // matchs = selectedFormObjects.
-  
-      console.log("matchs", matchs);
-      console.log("flatted matchs", flat);
-  
-      const x = [];
+      // console.log("matchs", matchs);
+      // console.log("flatted matchs", flat);
   
       function getDuplicates(arrayOfArrays) {
         let duplicates = [];
@@ -71,7 +67,7 @@ const Reports = ({ surveys }) => {
         }
         return duplicates;
       }
-      console.log("flat result", flat);
+      // console.log("flat result", flat);
       return selectedForms.length < 2 ? flat[0] : getDuplicates(flat);
     }
   )
@@ -97,7 +93,7 @@ const Reports = ({ surveys }) => {
   const selectForm = async (id) => {
     const isValueSelected = selectedForms.includes(id);
     const newValues = selectedForms.filter((id) => !id);
-    console.log(isValueSelected, newValues);
+    // console.log(isValueSelected, newValues);
     if (isValueSelected) {
       setSelectedForms(newValues);
       deleteResults(id);
@@ -112,7 +108,7 @@ const Reports = ({ surveys }) => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_schema_id/${id}`
     );
     const result = await data.json();
-    console.log("fetch result", result);
+    // console.log("fetch result", result);
     addResults(result);
   };
   const addResults = (result) => setResults((prev) => [...prev, ...result]);
@@ -143,7 +139,6 @@ const Reports = ({ surveys }) => {
         {surveys?.map((survey) => {
           const json = JSON.parse(survey?.content);
           const fields = json.pages.map((page) => page.elements).flat();
-          console.log("fields", fields);
           return (
             <>
               <div
@@ -298,7 +293,60 @@ const Reports = ({ surveys }) => {
           </div>
         </div>
         <div className="row mt-5">
-          {selected && (
+        {filteredResults && (
+          <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">By</th>
+              {/* {relatedSurveys?.map((survey) => (
+                <th scope="col" className="text-center">
+                  {JSON.parse(survey.content).title}
+                </th>
+              ))} */}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredResults &&
+              filteredResults.map((element, index) => (
+                <>
+                  <tr>
+                    {/* <td scope="row">{element.createdat.split("T")[0]}</td>
+                    <td>{element.createdby}</td> */}
+                    {/* {relatedSurveys?.map((survey) => (
+                      <td
+                        scope="col"
+                        className="d-flex justify-content-center gap-3"
+                      >
+                        <Link
+                          legacyBehavior
+                          href={{
+                            pathname: `/${survey.id}/relatedSurvey`,
+                            query: {
+                              relatedPrimaryResultId: element.surveyresultid,
+                            },
+                          }}
+                        >
+                          <a class="btn btn-primary " role="button">
+                            Run
+                          </a>
+                        </Link>
+                        <a
+                          href={`/dashboard/${element.surveyresultid}/relatedSurveyOutputResults`}
+                          class="btn btn-primary"
+                          role="button"
+                        >
+                          Results
+                        </a>{" "}
+                      </td>
+                    ))} */}
+                  </tr>
+                </>
+              ))}
+          </tbody>
+        </table>
+        )}
+          {/* {selected && (
             <div className="col-sm-6 col-md-4">
               <div className="list-group">
                 <div className="list-group-item list-group-item-action active">
@@ -333,7 +381,7 @@ const Reports = ({ surveys }) => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </section>
       {/* <section className="container mt-5">

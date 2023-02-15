@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@leoncan122/react-form-lib": "git://github.com/leoncan122/react-form-lib.git#813e858",
     "@next/font": "13.0.7",
     "bootstrap": "^5.2.3",
     "next": "13.0.7",

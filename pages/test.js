@@ -3,6 +3,7 @@ import {
   OneColumnCheckbox,
   RadioList,
   InputTextarea,
+  InputNumber,
 } from "@leoncan122/react-form-lib";
 import { useState } from "react";
 
@@ -53,6 +54,7 @@ const test = () => {
         name="suggestions"
         onChange={handleSingleValueForm}
       />
+      <InputNumber name="numberValue" onChange={handleSingleValueForm} title="Number"/>
     </>
   );
 };
