@@ -11,7 +11,7 @@ const authToken = process.env.NPM_TOKEN;
 // fs.writeFileSync(
 //   '.npmrc',
 //   `//npm.pkg.github.com/:_authToken=${process.env.NPM_TOKEN}\n//npm.pkg.github.com/:_header:Authorization=token ${process.env.NPM_TOKEN}\n@${scope}:registry=https://npm.pkg.github.com\n`,
-// );
+//  );
 
 // Only run this script on Netlify, this is a default Netlify environment variable
 if (process.env.NETLIFY === 'true') {
