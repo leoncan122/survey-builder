@@ -57,6 +57,7 @@ const test = () => {
       <InputNumber name="numberValue" onChange={handleSingleValueForm} title="Number"/>
     </>
   );
+  
 };
 
 export default test;
