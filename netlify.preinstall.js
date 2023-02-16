@@ -15,11 +15,7 @@ const authToken = process.env.NPM_TOKEN;
 // Only run this script on Netlify, this is a default Netlify environment variable
 console.log("script fuera if", authToken)
  // }
- fetch('https://npm.pkg.github.com/download/@leoncan122/react-form-lib/0.3.8/d98c00ce19d2eeac8b8710aa763a0b4d4512cd96', {
-  headers: {
-    "Authorization": 'Bearer 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'
-  }
-}).then(console.log('Npm registered'))
+ 
 // if (process.env.NETLIFY === 'true') {
 //   console.log("script pasa if", authToken)
 //   if (process.env.NETLIFY === 'true') { // this is a default Netlify environment variable
