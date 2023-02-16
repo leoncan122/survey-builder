@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
-import useCopyToClipboard from "../hooks/useCopyToClipboard";
-import useNamesSelected from "../hooks/useNamesSelected";
+import UseCopyToClipboard from "../hooks/UseCopyToClipboard";
+import UseNamesSelected from "../hooks/UseNamesSelected";
 import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
 
@@ -9,7 +9,7 @@ const Reports = ({ surveys }) => {
   // console.log(surveys);
   const [selected, setSelected] = useState(null);
   const [selectedForms, setSelectedForms] = useState([]);
-  const [selectedNames, select] = useNamesSelected([]);
+  const [selectedNames, select] = UseNamesSelected([]);
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
