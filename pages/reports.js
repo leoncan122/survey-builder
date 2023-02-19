@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
-import UseCopyToClipboard from "../hooks/UseCopyToClipboard";
-import UseNamesSelected from "../hooks/UseNamesSelected";
+import UseNamesSelected from '../hooks/UseNamesSelected';
 import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
 
