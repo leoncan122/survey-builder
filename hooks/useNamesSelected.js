@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-function UseNamesSelected() {
+function useNamesSelected() {
   const [selectedNames, setData] = useState([])
 
   const select = async value => {
@@ -17,6 +17,6 @@ function UseNamesSelected() {
   return [selectedNames, select]
 }
 
-export default UseNamesSelected
+export default useNamesSelected;
 
 

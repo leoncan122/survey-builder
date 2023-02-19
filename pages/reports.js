@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
-import UseNamesSelected from '../hooks/UseNamesSelected';
+import useNamesSelected from '../hooks/useNamesSelected';
 import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
 
@@ -8,7 +8,7 @@ const Reports = ({ surveys }) => {
   // console.log(surveys);
   const [selected, setSelected] = useState(null);
   const [selectedForms, setSelectedForms] = useState([]);
-  const [selectedNames, select] = UseNamesSelected([]);
+  const [selectedNames, select] = useNamesSelected([]);
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
