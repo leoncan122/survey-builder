@@ -34,11 +34,11 @@ const MySurveys = ({ data }) => {
                         Dashboard
                       </a>{" "}
                       <a
-                        href={`editor/${survey.id}`}
+                        href={`/${survey.id}/survey`}
                         className="btn btn-secondary"
                         role="button"
                       >
-                        Edit
+                        Run
                       </a>
                     </p>
                   </div>
