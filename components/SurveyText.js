@@ -3,6 +3,7 @@ import { Survey } from "survey-react-ui";
 import { text } from "../jsons/inputTypes";
 
 const SurveyText = ({data}) => {
+  console.log(data)
   let myCss = {
     row: "sv-row",
     question: {
@@ -12,7 +13,7 @@ const SurveyText = ({data}) => {
     
 };
 const id = data?.id
-  const model = new Model(data[0].content);
+  const model = new Model(data.content);
   model.onComplete.add( async function (sender, options) {
     const body = JSON.stringify({
       surveyId: id,

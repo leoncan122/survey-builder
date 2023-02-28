@@ -3,6 +3,7 @@ import { Layout } from "../components/Layout";
 import useNamesSelected from '../hooks/useNamesSelected';
 import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
+import CsvButton from "../components/CsvButton";
 
 const Reports = ({ surveys }) => {
   // console.log(surveys);
@@ -15,6 +16,7 @@ const Reports = ({ surveys }) => {
   const [showModalFilter, setShowModalFilter] = useState(false);
   useEffect(() => {
     let resultados = [];
+    console.log("results dentro useEffect", results)
     const filterResults = (arr) => {
       if (arr.length < 1) return;
 
@@ -90,6 +92,7 @@ console.log("filtered results", filteredResults)
     }
   )
   const selectForm = async (id) => {
+    console.log("result id",id)
     const isValueSelected = selectedForms.includes(id);
     const newValues = selectedForms.filter((id) => !id);
     // console.log(isValueSelected, newValues);
@@ -108,6 +111,7 @@ console.log("filtered results", filteredResults)
     );
     const result = await data.json();
     // console.log("fetch result", result);
+    console.log("results before add",result)
     addResults(result);
   };
   const addResults = (result) => setResults((prev) => [...prev, ...result]);
@@ -293,14 +297,20 @@ console.log("filtered results", filteredResults)
         </div>
         <div className="row mt-5">
         {filteredResults && (
+          <>
+          <p>{filteredResults.length} results</p>
+          <CsvButton csvData={filteredResults} fileName="csv_test" headers={['dsad']}/>
+          </>
+        )}
+        {filteredResults && (
           <table class="table">
           <thead>
             <tr>
               <th scope="col">Date</th>
               <th scope="col">By</th>
-              {/* {relatedSurveys?.map((survey) => (
+              {/* {filteredResults?.map((data) => (
                 <th scope="col" className="text-center">
-                  {JSON.parse(survey.content).title}
+                  
                 </th>
               ))} */}
             </tr>

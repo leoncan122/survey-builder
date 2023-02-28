@@ -3,17 +3,26 @@ import { Layout } from "../../../components/Layout";
 import Link from "next/link";
 // import { Button } from "@leoncan122/react-form-lib";
 
-const Index = ({ data, relatedSurveys }) => {
-  console.log(data);
+const Index = ({ survey_schema, data, relatedSurveys }) => {
+  // console.log(data);
   // const headers = data[0]?.result && Object.keys(data[0]?.result);
 
   return (
     <Layout>
       <section class="container mt-5">
-        <h1>{JSON.parse(data[0]?.content).title}</h1>
+        <h1>{JSON.parse(survey_schema.content).title}</h1>
         <h2>Dashboard</h2>
         <h2 class="mt-5">What do you want to do today?</h2>
         <div class="d-flex gap-3" role="group" aria-label="dashboard-buttons">
+          <div class="btn-group" role="group">
+            <a
+              type="button"
+              class="btn btn-primary"
+              href={`/${survey_schema.id}/survey`}
+            >
+              Run survey
+            </a>
+          </div>
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary">
               Download csv
@@ -23,7 +32,7 @@ const Index = ({ data, relatedSurveys }) => {
             <a
               type="button"
               class="btn btn-primary"
-              href={`${data[0].id}/surveyOutputResults`}
+              href={`${survey_schema.id}/surveyOutputResults`}
             >
               Make report
             </a>
@@ -32,7 +41,7 @@ const Index = ({ data, relatedSurveys }) => {
             <a
               type="button"
               class="btn btn-primary"
-              href={`editor/${data[0].id}`}
+              href={`editor/${survey_schema.id}`}
             >
               Edit survey
             </a>
@@ -42,33 +51,45 @@ const Index = ({ data, relatedSurveys }) => {
         <h3 className="mt-5 mb-3">Relational surveys</h3>
         <div class="row gap-3">
           {/* <div class=""> */}
-            {relatedSurveys?.map((survey) => (
-              <div class="col-sm-6 col-md-3 card">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{JSON.parse(survey.content).title}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{survey.createdat.split("T")[0]}</h6>
-                  <p class="card-text">This survey has a 1 to many relation with each of the main's output survey</p>
-                  <a
-                    href={`/editor/${survey.id}/related-survey`}
-                    class="btn btn-secondary mt-auto align-self-start"
-                    role="button"
-                  >
-                    Edit
-                  </a>
-                </div>
-              </div>
-            ))}
-            <div class="card col-sm-6 col-md-3">
+          {relatedSurveys?.map((survey) => (
+            <div class="col-sm-6 col-md-3 card">
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Add new Survey</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Today's date</h6>
-                <p class="card-text">This survey has a 1 to many relation with each of the main's output survey</p>
-
-                <a href={`/creator/${data[0].id}/related-survey`} class="btn btn-secondary mt-auto align-self-start" role="button">
-                  Add
+                <h5 class="card-title">{JSON.parse(survey.content).title}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {survey.createdat.split("T")[0]}
+                </h6>
+                <p class="card-text">
+                  This survey has a 1 to many relation with each of the main's
+                  output survey
+                </p>
+                <a
+                  href={`/editor/${survey.id}/related-survey`}
+                  class="btn btn-secondary mt-auto align-self-start"
+                  role="button"
+                >
+                  Edit
                 </a>
               </div>
             </div>
+          ))}
+          <div class="card col-sm-6 col-md-3">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Add new Survey</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Today's date</h6>
+              <p class="card-text">
+                This survey has a 1 to many relation with each of the main's
+                output survey
+              </p>
+
+              <a
+                href={`/creator/${survey_schema.id}/related-survey`}
+                class="btn btn-secondary mt-auto align-self-start"
+                role="button"
+              >
+                Add
+              </a>
+            </div>
+          </div>
           {/* </div> */}
         </div>
       </section>
@@ -133,13 +154,16 @@ const Index = ({ data, relatedSurveys }) => {
 export default Index;
 export const getServerSideProps = async (ctx) => {
   const { id } = ctx.params;
-  const [data, relatedSurveys] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_id/${id}`).then(
-      (r) => r.json()
-    ),
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_related/${id}`).then((r) =>
-      r.json()
-    ),
+  const [survey_schema, data, relatedSurveys] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/${id}`)
+      .then((r) => r.json())
+      .then((data) => data[0]),
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_result_by_survey_id/${id}`
+    ).then((r) => r.json()),
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/survey/all_related/${id}`
+    ).then((r) => r.json()),
   ]);
-  return { props: { data, relatedSurveys } };
+  return { props: { survey_schema, data, relatedSurveys } };
 };

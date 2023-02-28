@@ -12,7 +12,7 @@ const  SurveyText = dynamic(
 );
 
 const SurveyForm = ({data}) => {
-  console.log(data)
+  // console.log("data",data)
 
   useEffect(() => {
     StylesManager.applyTheme("modern");
@@ -31,5 +31,5 @@ export async function getServerSideProps(ctx) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/survey/${id}`);
     
     const data = await response.json();
-    return { props: { data } };
+    return { props: { data: data[0] } };
   }
