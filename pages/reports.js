@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
-import useNamesSelected from '../hooks/useNamesSelected';
+import useNamesSelected from "../hooks/useNamesSelected";
 import AddFilter from "../components/AddFilter";
 import "../styles/FilterPanel.module.css";
 import CsvButton from "../components/CsvButton";
+import MyTable from "../components/MyTable";
 
 const Reports = ({ surveys }) => {
   // console.log(surveys);
@@ -16,7 +17,7 @@ const Reports = ({ surveys }) => {
   const [showModalFilter, setShowModalFilter] = useState(false);
   useEffect(() => {
     let resultados = [];
-    console.log("results dentro useEffect", results)
+    console.log("results dentro useEffect", results);
     const filterResults = (arr) => {
       if (arr.length < 1) return;
 
@@ -34,65 +35,61 @@ const Reports = ({ surveys }) => {
     filterResults(filters);
     setFilteredResults(resultados);
   }, [filters]);
-console.log("filtered results", filteredResults)
+  console.log("filtered results", filteredResults);
 
-  const compareArrays = useCallback(
-    (surveys) => {
-      let matchs = [];
-      const selectedFormObjects = surveys
-        .filter((survey) => selectedForms.includes(survey.id))
-        .map((survey) =>
-          JSON.parse(survey?.content).pages.map((page) => page.elements)
-        );
-      const flat = selectedFormObjects.flat();
-  
-      // console.log("matchs", matchs);
-      // console.log("flatted matchs", flat);
-  
-      function getDuplicates(arrayOfArrays) {
-        let duplicates = [];
-        let valueMap = new Map();
-        arrayOfArrays
-          .reduce((acc, curr) => acc.concat(curr), [])
-          .forEach((obj) => {
-            let value = obj.valueName;
-            if (!valueMap.has(value)) {
-              valueMap.set(value, []);
-            }
-            valueMap.get(value).push(obj);
-          });
-        for (let [key, value] of valueMap) {
-          if (value.length > 1) {
-            duplicates = duplicates.concat(value.slice(0, 1));
+  const compareArrays = useCallback((surveys) => {
+    let matchs = [];
+    const selectedFormObjects = surveys
+      .filter((survey) => selectedForms.includes(survey.id))
+      .map((survey) =>
+        JSON.parse(survey?.content).pages.map((page) => page.elements)
+      );
+    const flat = selectedFormObjects.flat();
+
+    // console.log("matchs", matchs);
+    // console.log("flatted matchs", flat);
+
+    function getDuplicates(arrayOfArrays) {
+      let duplicates = [];
+      let valueMap = new Map();
+      arrayOfArrays
+        .reduce((acc, curr) => acc.concat(curr), [])
+        .forEach((obj) => {
+          let value = obj.valueName;
+          if (!valueMap.has(value)) {
+            valueMap.set(value, []);
           }
+          valueMap.get(value).push(obj);
+        });
+      for (let [key, value] of valueMap) {
+        if (value.length > 1) {
+          duplicates = duplicates.concat(value.slice(0, 1));
         }
-        return duplicates;
       }
-      // console.log("flat result", flat);
-      return selectedForms.length < 2 ? flat[0] : getDuplicates(flat);
+      return duplicates;
     }
-  )
-  const typeOfQuestion = useCallback(
-    (field) => {
-      if (!field.type) return;
-      switch (field.type) {
-        case "radiogroup":
-          return field.choices.map((choice) => {
-            if (typeof choice === "object") return choice.value;
-            return choice;
-          });
-          break;
-        case "checkbox":
-          return field.choices.map((choice) => {
-            if (typeof choice === "object") return choice.value;
-            return choice;
-          });
-          break;
-      }
+    // console.log("flat result", flat);
+    return selectedForms.length < 2 ? flat[0] : getDuplicates(flat);
+  });
+  const typeOfQuestion = useCallback((field) => {
+    if (!field.type) return;
+    switch (field.type) {
+      case "radiogroup":
+        return field.choices.map((choice) => {
+          if (typeof choice === "object") return choice.value;
+          return choice;
+        });
+        break;
+      case "checkbox":
+        return field.choices.map((choice) => {
+          if (typeof choice === "object") return choice.value;
+          return choice;
+        });
+        break;
     }
-  )
+  });
   const selectForm = async (id) => {
-    console.log("result id",id)
+    console.log("result id", id);
     const isValueSelected = selectedForms.includes(id);
     const newValues = selectedForms.filter((id) => !id);
     // console.log(isValueSelected, newValues);
@@ -111,7 +108,7 @@ console.log("filtered results", filteredResults)
     );
     const result = await data.json();
     // console.log("fetch result", result);
-    console.log("results before add",result)
+    console.log("results before add", result);
     addResults(result);
   };
   const addResults = (result) => setResults((prev) => [...prev, ...result]);
@@ -121,7 +118,14 @@ console.log("filtered results", filteredResults)
     setResults(newResults);
   };
 
-  const deleteFilter = (filter) => setFilters([...filters.filter(fltr => fltr.expression !== filter.expression || fltr.resultKey !== filter.resultKey)])
+  const deleteFilter = (filter) =>
+    setFilters([
+      ...filters.filter(
+        (fltr) =>
+          fltr.expression !== filter.expression ||
+          fltr.resultKey !== filter.resultKey
+      ),
+    ]);
   console.log("filters", filters);
 
   return (
@@ -249,8 +253,16 @@ console.log("filtered results", filteredResults)
             <div className="d-flex gap-2 py-2 px-1">
               {filters.length > 0 ? (
                 filters.map((filter) => (
-                  <p type="button" className="btn-filter-panel"  name="" onClick={() => deleteFilter(filter)}>
-                    <span>{filter.resultKey}  <ins>{filter.symbol}</ins>  {filter.expression}</span>
+                  <p
+                    type="button"
+                    className="btn-filter-panel"
+                    name=""
+                    onClick={() => deleteFilter(filter)}
+                  >
+                    <span>
+                      {filter.resultKey} <ins>{filter.symbol}</ins>{" "}
+                      {filter.expression}
+                    </span>
                     <small>X</small>
                   </p>
                 ))
@@ -287,7 +299,6 @@ console.log("filtered results", filteredResults)
                       Add filter
                     </button>
                   </button>
-                      
                 </>
               ))
             ) : (
@@ -296,65 +307,17 @@ console.log("filtered results", filteredResults)
           </div>
         </div>
         <div className="row mt-5">
-        {filteredResults && (
-          <>
-          <p>{filteredResults.length} results</p>
-          <CsvButton csvData={filteredResults} fileName="csv_test" headers={['dsad']}/>
-          </>
-        )}
-        {filteredResults && (
-          <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">By</th>
-              {/* {filteredResults?.map((data) => (
-                <th scope="col" className="text-center">
-                  
-                </th>
-              ))} */}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredResults &&
-              filteredResults.map((element, index) => (
-                <>
-                  <tr>
-                    {/* <td scope="row">{element.createdat.split("T")[0]}</td>
-                    <td>{element.createdby}</td> */}
-                    {/* {relatedSurveys?.map((survey) => (
-                      <td
-                        scope="col"
-                        className="d-flex justify-content-center gap-3"
-                      >
-                        <Link
-                          legacyBehavior
-                          href={{
-                            pathname: `/${survey.id}/relatedSurvey`,
-                            query: {
-                              relatedPrimaryResultId: element.surveyresultid,
-                            },
-                          }}
-                        >
-                          <a class="btn btn-primary " role="button">
-                            Run
-                          </a>
-                        </Link>
-                        <a
-                          href={`/dashboard/${element.surveyresultid}/relatedSurveyOutputResults`}
-                          class="btn btn-primary"
-                          role="button"
-                        >
-                          Results
-                        </a>{" "}
-                      </td>
-                    ))} */}
-                  </tr>
-                </>
-              ))}
-          </tbody>
-        </table>
-        )}
+          {filteredResults && (
+            <div className="d-flex justify-content-between">
+              <p>{filteredResults.length} results</p>
+              <CsvButton
+                csvData={filteredResults}
+                fileName="csv_test"
+                headers={["dsad"]}
+              />
+            </div>
+          )}
+          {filteredResults && <MyTable rows={filteredResults} />}
           {/* {selected && (
             <div className="col-sm-6 col-md-4">
               <div className="list-group">
@@ -422,3 +385,5 @@ export const getServerSideProps = async () => {
   const surveys = await data.json();
   return { props: { surveys } };
 };
+
+

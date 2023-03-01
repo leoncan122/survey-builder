@@ -34,7 +34,7 @@ const Index = ({ survey_schema, data, relatedSurveys }) => {
               class="btn btn-primary"
               href={`${survey_schema.id}/surveyOutputResults`}
             >
-              Make report
+             Data results
             </a>
           </div>
           <div class="btn-group" role="group">
