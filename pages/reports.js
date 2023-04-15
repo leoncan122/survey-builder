@@ -17,7 +17,7 @@ const Reports = ({ surveys }) => {
   const [showModalFilter, setShowModalFilter] = useState(false);
   useEffect(() => {
     let resultados = [];
-    console.log("results dentro useEffect", results);
+    // console.log("results dentro useEffect", results);
     const filterResults = (arr) => {
       if (arr.length < 1) return;
 
@@ -126,7 +126,7 @@ const Reports = ({ surveys }) => {
           fltr.resultKey !== filter.resultKey
       ),
     ]);
-  console.log("filters", filters);
+  console.log("selected", selected);
 
   return (
     <Layout>
@@ -143,99 +143,106 @@ const Reports = ({ surveys }) => {
         <h2>Follow the steps</h2>
 
         <h3 className="mt-5 mb-3">1. Select one or more surveys</h3>
-        {surveys?.map((survey) => {
-          const json = JSON.parse(survey?.content);
-          const fields = json.pages.map((page) => page.elements).flat();
-          return (
-            <>
-              <div
-                className={`row shadow mb-5 py-5  ${
-                  selectedForms.includes(survey.id) && `bg-info`
-                }`}
-              >
-                <div className={`card shadow py-3 col-sm-6 col-md-4 `}>
+        <div id="form-selector-bar" className="container-fluid ">
+          <div className="row gap-md-5  mb-5">
+            {surveys?.map((survey) => {
+              const json = JSON.parse(survey?.content);
+              const fields = json.pages.map((page) => page.elements).flat();
+              
+              const handleOptionChange = (event) => {
+               fields.find(field => field.name === event.target.value ?  setSelected(field) : null)
+              };
+              return (
+                <>
                   <div
-                    className={`card-body d-flex flex-column`}
-                    // onClick={(e) => handleSelection(survey.id)}
+                    className={`col col-sm-12 col-md-4 col-lg-3 py-3 shadow  ${
+                      selectedForms.includes(survey.id) && `bg-info`
+                    }`}
                   >
-                    <h5 className="card-title fw-bolder">{json.title}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted ">
-                      {survey.createdat.split("T")[0]}
-                    </h6>
-
-                    <button
-                      onClick={() => selectForm(survey.id)}
-                      className="bg-primary bg-gradient"
-                    >
-                      Select
-                    </button>
-                  </div>
-                  <div className="list-group">
-                    <button className="list-group-item list-group-item-action active fw-bolder  ">
-                      {/* {json.title} */}
-                      Datapoints
-                    </button>
-                    {fields.map((field, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelected(field)}
-                        className="list-group-item list-group-item-action d-flex justify-content-between min-h-mas align-items-center"
+                    <div className={`card shadow `}>
+                      <div
+                        className={`card-body d-flex flex-column`}
+                        // onClick={(e) => handleSelection(survey.id)}
                       >
-                        <p>{field.valueName}</p>
-                        <p className="small">
-                          <strong>+</strong>
-                        </p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="col-sm-6 col-md-8 list-group card ">
-                  {selected && (
-                    <>
-                      <div className="list-group-item list-group-item-action ">
-                        <strong>name: </strong> "{selected?.name}"
-                      </div>
-                      <div className="list-group-item list-group-item-action ">
-                        <strong>Title: </strong> {`"${selected?.title}"`}
-                      </div>
-                      <div className="list-group-item list-group-item-action ">
-                        <strong>Value name: </strong>
-                        {`"${selected?.valueName}"`}
-                      </div>
+                        <h5 className="card-title fw-bolder">{json.title}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted ">
+                          {survey.createdat.split("T")[0]}
+                        </h6>
 
-                      <div className="list-group-item list-group-item-action ">
-                        <strong>Choices: </strong>{" "}
-                        {selected.choices && (
-                          <div className="d-flex mt-2 ">
-                            {Array.from({ length: 2 }, (_, i) => {
-                              const columnLength = Math.ceil(
-                                selected.choices.length / 2
-                              );
-                              return (
-                                <div key={i} style={{ flex: 1 }}>
-                                  {typeOfQuestion(selected)
-                                    .slice(
-                                      i * columnLength,
-                                      (i + 1) * columnLength
-                                    )
-                                    .map((option) => (
-                                      <>
-                                        <p className="small">{option}</p>
-                                      </>
-                                    ))}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+                        <button
+                          onClick={() => selectForm(survey.id)}
+                          className="bg-primary bg-gradient"
+                        >
+                          Select
+                        </button>
                       </div>
-                    </>
-                  )}
-                </div>
+                      <div className="list-group">
+                        <button className="list-group-item list-group-item-action active fw-bolder">
+                          {/* {json.title} */}
+                          Datapoints
+                        </button>
+                        <select class="custom-select" id="inputGroupSelect01" onChange={handleOptionChange}>
+                          {fields.map((field, index) => (
+                            <option 
+                            key={index}
+                            value={field.name}
+                            >
+                             
+                                {field.valueName}
+
+                                {/* <strong>+</strong> */}
+                          
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </div>
+        <div className="  ">
+          {selected && (
+            <>
+              <div className="list-group-item list-group-item-action ">
+                <strong>name: </strong> "{selected?.name}"
+              </div>
+              <div className="list-group-item list-group-item-action ">
+                <strong>Title: </strong> {`"${selected?.title}"`}
+              </div>
+              <div className="list-group-item list-group-item-action ">
+                <strong>Value name: </strong>
+                {`"${selected?.valueName}"`}
+              </div>
+
+              <div className="list-group-item list-group-item-action ">
+                <strong>Choices: </strong>{" "}
+                {selected.choices && (
+                  <div className="d-flex mt-2 ">
+                    {Array.from({ length: 2 }, (_, i) => {
+                      const columnLength = Math.ceil(
+                        selected.choices.length / 2
+                      );
+                      return (
+                        <div key={i} style={{ flex: 1 }}>
+                          {typeOfQuestion(selected)
+                            .slice(i * columnLength, (i + 1) * columnLength)
+                            .map((option) => (
+                              <>
+                                <p className="small">{option}</p>
+                              </>
+                            ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </>
-          );
-        })}
+          )}
+        </div>
       </section>
       <section className="container mt-5">
         <h3 className="mt-5 mb-3">
@@ -306,7 +313,13 @@ const Reports = ({ surveys }) => {
             )}
           </div>
         </div>
-        <div className="row mt-5">
+        
+      </section>
+      <section className="container mt-5">
+      <h3 className="mt-5 mb-3">
+          3. See the results and compare between them
+        </h3>
+      <div className="row mt-5">
           {filteredResults && (
             <div className="d-flex justify-content-between">
               <p>{filteredResults.length} results</p>
@@ -385,5 +398,3 @@ export const getServerSideProps = async () => {
   const surveys = await data.json();
   return { props: { surveys } };
 };
-
-

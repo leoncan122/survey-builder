@@ -1,9 +1,9 @@
 import {
   InputDate,
-  OneColumnCheckbox,
   RadioList,
   InputTextarea,
   InputNumber,
+  InputCheckboxColumns,
 } from "@leoncan122/react-form-lib";
 import { useState } from "react";
 
@@ -33,7 +33,7 @@ const test = () => {
       <InputDate name="dateEvent" surveyForm={surveyForm} onChange={handleForm}>
         Date
       </InputDate>
-      <OneColumnCheckbox
+      <InputCheckboxColumns
         name="fboAttendees"
         options={fboAttendeesOptions}
         surveyForm={surveyForm}
@@ -53,7 +53,7 @@ const test = () => {
         title="TextArea"
         name="suggestions"
         onChange={handleSingleValueForm}
-      />
+  />
       <InputNumber name="numberValue" onChange={handleSingleValueForm} title="Number"/>
     </>
   );

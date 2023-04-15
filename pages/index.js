@@ -21,15 +21,23 @@ export default function Home() {
           <img className=""></img>
         </nav>
       </header>
-      <div className="mt-5 h-75">
-        <div className="d-grid gap-3 mx-auto text-center">
-          <h1>Welcome to Survey builder</h1>
-          <h2>Manage your forms</h2>
+      <div id="hero" className="mt-5 h-75">
+        <div className="d-grid gap-3 mx-auto text-center container">
+          <h1>Welcome to Survey Manager</h1>
+          <h4 className="">Manage your forms in a simple way, we recommend to read first <a href="#learn">this</a> section</h4>
           <button>
             <a href="/mysurveys">Let's start</a>
           </button>
         </div>
       </div>
+      <section id="learn" className="my-5">
+          <div className="container">
+          <h3>How it works?</h3>
+          <p>Are you tired of managing multiple forms and struggling to keep track of related data? Our application solves that problem by allowing you to create forms with unlimited values and link them to sub-level forms. This makes it easier for you to manage complex data structures and generate reports that provide a comprehensive view of all related data.</p>
+          <p>Our intuitive user interface makes it easy to create new forms and link them to sub-level forms. With just a few clicks, you can create a hierarchy of forms that accurately reflects your data structure. You can also customize the layout of each form to meet your unique data management needs.</p>
+          Our reporting feature allows you to generate reports that provide a comprehensive view of all related data. You can easily filter and sort data to focus on specific fields and generate reports that meet your unique reporting requirements. With our application, you'll never have to worry about managing multiple forms or struggling to keep track of related data again.
+          </div>
+      </section>
     </>
   );
 }

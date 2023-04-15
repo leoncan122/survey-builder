@@ -45,11 +45,10 @@ main {
   display: grid;
   /* grid-template-columns: repeat(12, 1fr); */
 }
-a,
-p,
+/* 
 button {
   font-size: 18px;
-}
+} */
 button {
   border: none;
   background-color: transparent;

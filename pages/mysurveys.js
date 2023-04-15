@@ -16,10 +16,11 @@ const MySurveys = ({ data }) => {
     <Layout>
       <section id="mysurveys-container">
         <h1>My surveys</h1>
+        <div className="row">
+
         {data?.map((survey) => (
           <>
-            <div className="row">
-              <div className="col-sm-6 col-md-4">
+              <div className="col-sm-12 col-md-4 col-lg-3">
                 <div className="thumbnail">
                   <img src="images.jfif" alt="survey-img" />
                   <div className="caption">
@@ -44,10 +45,11 @@ const MySurveys = ({ data }) => {
                   </div>
                 </div>
               </div>
-            </div>
             
           </>
         ))}
+            </div>
+
       </section>
     </Layout>
   );

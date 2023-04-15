@@ -1,6 +1,7 @@
 import {  Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import { text } from "../jsons/inputTypes";
+import { Layout } from "./Layout";
 
 const SurveyText = ({data}) => {
   console.log(data)
@@ -32,7 +33,12 @@ const id = data?.id
     console.log(data)
   })
     
-  return <Survey model={model} css={myCss}/>
+  return (
+    <Layout>
+      
+      <Survey model={model} css={myCss}/>
+    </Layout>
+  )
 }
 
 export default SurveyText
