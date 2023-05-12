@@ -5,15 +5,20 @@ import {
   InputNumber,
   InputCheckboxColumns,
 } from "@leoncan122/react-form-lib";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import '../styles/Custom.module.css'
+import Sticky from "../components/Sticky";
 
 const test = () => {
+  const ref = useRef(null)
+
   const [surveyForm, setSurveyForm] = useState({
     dateEvent: "2022/05/02",
     fboAttendees: ["Faith Leader"],
     suggestions: "",
     radioOptions: 'Other',
     radioOptionsOther: '',
+    descriptionArea: ''
   });
   console.log(surveyForm);
   const handleForm = (e) =>
@@ -33,6 +38,10 @@ const test = () => {
       <InputDate name="dateEvent" surveyForm={surveyForm} onChange={handleForm}>
         Date
       </InputDate>
+      <div>
+      <Sticky onClick={(e) => console.log("click",e)} ref={ref} hideWhen='test' topOffset={'20px'} id="sticky-custom" >
+        <button role="button" className="btn btn-primary" >STICKED BUTTON</button>
+      </Sticky>
       <InputCheckboxColumns
         name="fboAttendees"
         options={fboAttendeesOptions}
@@ -41,6 +50,12 @@ const test = () => {
         title={"Meeting attendees"}
         columns={2}
       />
+      </div>
+      
+      
+
+     
+      
       <RadioList
         options={["Option 1", "Option 2", "Other"]}
         name="radioOptions"
@@ -49,7 +64,30 @@ const test = () => {
         surveyForm={surveyForm}
         onChange={handleSingleValueForm}
       />
+      
+      
       <InputTextarea
+        title="TextArea"
+        name="suggestions"
+        onChange={handleSingleValueForm}
+  />
+  <InputTextarea
+        id="test"
+        title="Test"
+        name="suggestions"
+        onChange={handleSingleValueForm}
+  />
+  <InputTextarea
+        title="TextArea"
+        name="suggestions"
+        onChange={handleSingleValueForm}
+  />
+  <InputTextarea
+        title="TextArea"
+        name="suggestions"
+        onChange={handleSingleValueForm}
+  />
+  <InputTextarea
         title="TextArea"
         name="suggestions"
         onChange={handleSingleValueForm}

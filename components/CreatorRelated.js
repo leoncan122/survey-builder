@@ -3,6 +3,7 @@ import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 import "survey-core/defaultV2.min.css";
 import "survey-creator-core/survey-creator-core.min.css";
 import { useRouter } from "next/router";
+import Header from '../components/Header'
 
 const creatorOptions = {
   showLogicTab: true,
@@ -37,5 +38,8 @@ export default function SurveyCreatorWidget() {
 
   };
 
-  return <SurveyCreatorComponent creator={creator} />;
+  return <>
+  <Header />
+  <SurveyCreatorComponent creator={creator} />
+  </>;
 }

@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 const Header = () => {
-  const router = useRouter()
   // console.log(router)
   return (
     

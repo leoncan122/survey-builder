@@ -56,6 +56,8 @@ button {
 }
 header {
   padding: 2rem 1.5rem;
+  position: relative;
+  z-index: 10;
 }
 
 main #menu {
@@ -149,7 +151,7 @@ main #content {
   height: 100%;
   overflow: hidden;
   outline: 0;
-  background-color: aqua;
+  background-color: rgba(200, 203, 203, 0.54);
 }
 .modal-filter  .modal-contenido  .modal-heading  {
   padding: 1% 0;
@@ -187,4 +189,10 @@ main #content {
 
 .btn-filter-panel > span {
   font-size: 12px; 
+}
+
+
+.fixed-cont {
+  position: 'sticky';
+  top: 20px;
 }

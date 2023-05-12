@@ -20,9 +20,9 @@ const MySurveys = ({ data }) => {
 
         {data?.map((survey) => (
           <>
-              <div className="col-sm-12 col-md-4 col-lg-3">
+              <div className="col-sm-12 col-md-4 col-xl-3">
                 <div className="thumbnail">
-                  <img src="images.jfif" alt="survey-img" />
+                  <img src="images.jfif" alt="survey-img" className="img-fluid"/>
                   <div className="caption">
                     <h3>{JSON.parse(survey.content).title}</h3>
                     <p>{survey.createdat.split('T')[0]}</p>

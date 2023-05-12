@@ -33,9 +33,10 @@ export default function Home() {
       <section id="learn" className="my-5">
           <div className="container">
           <h3>How it works?</h3>
-          <p>Are you tired of managing multiple forms and struggling to keep track of related data? Our application solves that problem by allowing you to create forms with unlimited values and link them to sub-level forms. This makes it easier for you to manage complex data structures and generate reports that provide a comprehensive view of all related data.</p>
-          <p>Our intuitive user interface makes it easy to create new forms and link them to sub-level forms. With just a few clicks, you can create a hierarchy of forms that accurately reflects your data structure. You can also customize the layout of each form to meet your unique data management needs.</p>
-          Our reporting feature allows you to generate reports that provide a comprehensive view of all related data. You can easily filter and sort data to focus on specific fields and generate reports that meet your unique reporting requirements. With our application, you'll never have to worry about managing multiple forms or struggling to keep track of related data again.
+          <p>Keep track of forms and related data.<br/> Our application solves that problem by allowing you to create forms with unlimited values and link them to sub-level forms. This makes it easier for you to manage complex data structures and generate reports that provide a comprehensive view of all related data.</p>
+          <p>Our platform offers a simple and intuitive interface, allowing you to quickly create and customize your forms. With our drag-and-drop builder, you can easily add fields, labels, and other elements to your forms, making it easy for you to capture the data you need.</p>
+         <p>But that's not all! Our advanced linking feature allows you to connect your forms with sub-forms, creating a hierarchy of data that makes it easier for you to analyze and generate detailed reports. You can easily generate simple reports for your individual forms or dive into the more complex data relationships with our multi-level report feature.</p>
+         <p>With our application, you can now take control of your data, and make informed business decisions that lead to success. Try it out now and see the difference it can make for your organization!</p>
           </div>
       </section>
     </>

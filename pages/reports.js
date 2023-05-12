@@ -148,14 +148,16 @@ const Reports = ({ surveys }) => {
             {surveys?.map((survey) => {
               const json = JSON.parse(survey?.content);
               const fields = json.pages.map((page) => page.elements).flat();
-              
+
               const handleOptionChange = (event) => {
-               fields.find(field => field.name === event.target.value ?  setSelected(field) : null)
+                fields.find((field) =>
+                  field.name === event.target.value ? setSelected(field) : null
+                );
               };
               return (
                 <>
                   <div
-                    className={`col col-sm-12 col-md-4 col-lg-3 py-3 shadow  ${
+                    className={`col col-sm-12 col-md-4 col-lg-3 py-3 shadow d-flex flex-column gap-4 justify-content-between ${
                       selectedForms.includes(survey.id) && `bg-info`
                     }`}
                   >
@@ -168,30 +170,31 @@ const Reports = ({ surveys }) => {
                         <h6 className="card-subtitle mb-2 text-muted ">
                           {survey.createdat.split("T")[0]}
                         </h6>
-
-                        <button
-                          onClick={() => selectForm(survey.id)}
-                          className="bg-primary bg-gradient"
-                        >
-                          Select
-                        </button>
                       </div>
+                    </div>
+
+                    <div className="d-flex flex-column gap-2">
+                      <button
+                        onClick={() => selectForm(survey.id)}
+                        className="btn btn-outline-dark"
+                      >
+                        Select
+                      </button>
                       <div className="list-group">
                         <button className="list-group-item list-group-item-action active fw-bolder">
                           {/* {json.title} */}
                           Datapoints
                         </button>
-                        <select class="custom-select" id="inputGroupSelect01" onChange={handleOptionChange}>
+                        <select
+                          class="custom-select"
+                          id="inputGroupSelect01"
+                          onChange={handleOptionChange}
+                        >
                           {fields.map((field, index) => (
-                            <option 
-                            key={index}
-                            value={field.name}
-                            >
-                             
-                                {field.valueName}
+                            <option key={index} value={field.name}>
+                              {field.valueName}
 
-                                {/* <strong>+</strong> */}
-                          
+                              {/* <strong>+</strong> */}
                             </option>
                           ))}
                         </select>
@@ -270,7 +273,7 @@ const Reports = ({ surveys }) => {
                       {filter.resultKey} <ins>{filter.symbol}</ins>{" "}
                       {filter.expression}
                     </span>
-                    <small>X</small>
+                    <small className="">X</small>
                   </p>
                 ))
               ) : (
@@ -313,13 +316,12 @@ const Reports = ({ surveys }) => {
             )}
           </div>
         </div>
-        
       </section>
       <section className="container mt-5">
-      <h3 className="mt-5 mb-3">
+        <h3 className="mt-5 mb-3">
           3. See the results and compare between them
         </h3>
-      <div className="row mt-5">
+        <div className="row mt-5">
           {filteredResults && (
             <div className="d-flex justify-content-between">
               <p>{filteredResults.length} results</p>
@@ -330,7 +332,7 @@ const Reports = ({ surveys }) => {
               />
             </div>
           )}
-          {filteredResults && <MyTable rows={filteredResults} />}
+          <MyTable rows={filteredResults.length > 0 ? filteredResults : results} />
           {/* {selected && (
             <div className="col-sm-6 col-md-4">
               <div className="list-group">
